@@ -1,0 +1,1555 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roland Shala — Auditeur Financier Indépendant</title>
+  <meta name="description" content="Roland Shala, auditeur financier indépendant spécialisé dans l'audit du secteur public et des institutions internationales (Union Européenne, Nations Unies, OTAN)." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:       #0d1b2a;
+      --navy-mid:   #162032;
+      --navy-light: #1e2f45;
+      --gold:       #c9a84c;
+      --gold-light: #e2c17a;
+      --white:      #f8f7f4;
+      --gray:       #8a95a3;
+      --border:     rgba(201,168,76,.2);
+      --transition: .35s cubic-bezier(.4,0,.2,1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── Scroll progress bar ── */
+    #progress-bar {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      z-index: 9999;
+      transition: width .1s linear;
+    }
+
+    /* ── Navigation ── */
+    nav {
+      position: fixed;
+      top: 2px; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 5%;
+      background: rgba(13,27,42,.9);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      letter-spacing: .03em;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--gold); }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-size: .8rem;
+      font-weight: 500;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--gray);
+      transition: color var(--transition);
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    .nav-cta {
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--gold) !important;
+      border: 1px solid var(--border);
+      padding: .5rem 1.25rem;
+      border-radius: 2px;
+      transition: background var(--transition), color var(--transition) !important;
+    }
+
+    .nav-cta:hover {
+      background: var(--gold) !important;
+      color: var(--navy) !important;
+    }
+
+    /* ── Hamburger ── */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--white);
+      transition: var(--transition);
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--navy);
+      z-index: 99;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+    }
+
+    .mobile-menu.open { display: flex; }
+
+    .mobile-menu a {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: var(--white);
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+
+    .mobile-menu a:hover { color: var(--gold); }
+
+    /* ── Hero ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 5% 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 70% 50%, rgba(201,168,76,.06) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 10% 80%, rgba(201,168,76,.04) 0%, transparent 60%);
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(201,168,76,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,168,76,.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black, transparent);
+    }
+
+    .hero-content {
+      position: relative;
+      max-width: 700px;
+    }
+
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.75rem;
+      opacity: 0;
+      animation: fadeUp .8s .2s forwards;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp .8s .35s forwards;
+    }
+
+    .hero-title em {
+      font-style: normal;
+      color: var(--gold);
+    }
+
+    .hero-subtitle {
+      font-size: 1.05rem;
+      color: var(--gray);
+      max-width: 520px;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp .8s .5s forwards;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp .8s .65s forwards;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      background: var(--gold);
+      color: var(--navy);
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: .9rem 2rem;
+      border-radius: 2px;
+      transition: background var(--transition), transform var(--transition);
+    }
+
+    .btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      border: 1px solid var(--border);
+      color: var(--white);
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: .9rem 2rem;
+      border-radius: 2px;
+      transition: border-color var(--transition), color var(--transition), transform var(--transition);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      transform: translateY(-2px);
+    }
+
+    /* badges institutions */
+    .hero-badges {
+      position: absolute;
+      right: 5%;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      opacity: 0;
+      animation: fadeIn 1s .9s forwards;
+    }
+
+    .badge {
+      display: flex;
+      align-items: center;
+      gap: .9rem;
+      background: rgba(255,255,255,.035);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: .8rem 1.2rem;
+      min-width: 180px;
+    }
+
+    .badge-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .9rem;
+      flex-shrink: 0;
+      background: rgba(201,168,76,.12);
+    }
+
+    .badge-text {
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      color: var(--gray);
+      text-transform: uppercase;
+    }
+
+    /* ── Divider ── */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+    }
+
+    /* ── Section base ── */
+    section { padding: 5rem 5%; }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 1.5rem;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .section-intro {
+      font-size: .95rem;
+      color: var(--gray);
+      max-width: 580px;
+      margin-bottom: 3.5rem;
+    }
+
+    /* ── Stats ── */
+    #stats {
+      padding: 3rem 5%;
+      background: var(--navy-mid);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+
+    .stat-item {
+      padding: 1.5rem 2rem;
+      text-align: center;
+      border-right: 1px solid var(--border);
+    }
+
+    .stat-item:last-child { border-right: none; }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: .35rem;
+    }
+
+    .stat-label {
+      font-size: .72rem;
+      font-weight: 500;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+
+    /* ── Services ── */
+    #services { background: var(--navy); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .service-card {
+      background: var(--navy);
+      padding: 2.5rem;
+      transition: background var(--transition);
+      position: relative;
+    }
+
+    .service-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--gold);
+      transition: width var(--transition);
+    }
+
+    .service-card:hover { background: var(--navy-light); }
+    .service-card:hover::after { width: 100%; }
+
+    .service-icon {
+      font-size: 1.6rem;
+      margin-bottom: 1.25rem;
+      display: block;
+    }
+
+    .service-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: .75rem;
+      color: var(--white);
+    }
+
+    .service-desc {
+      font-size: .85rem;
+      color: var(--gray);
+      line-height: 1.75;
+    }
+
+    .service-list {
+      list-style: none;
+      margin-top: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+    }
+
+    .service-list li {
+      font-size: .8rem;
+      color: var(--gray);
+      display: flex;
+      align-items: flex-start;
+      gap: .6rem;
+    }
+
+    .service-list li::before {
+      content: '—';
+      color: var(--gold);
+      flex-shrink: 0;
+      font-size: .75rem;
+      margin-top: .05em;
+    }
+
+    /* ── Profil ── */
+    #profil { background: var(--navy-mid); }
+
+    .profil-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .profil-left {}
+
+    .profil-portrait {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: var(--navy-light);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .portrait-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .75rem;
+      color: var(--border);
+    }
+
+    .portrait-placeholder svg { width: 64px; height: 64px; opacity: .4; }
+    .portrait-placeholder span { font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; opacity: .4; }
+
+    .profil-certifs {
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+    }
+
+    .certif-tag {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      font-size: .75rem;
+      font-weight: 500;
+      letter-spacing: .06em;
+      color: var(--gray);
+      padding: .6rem .9rem;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+    }
+
+    .certif-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .profil-right {}
+
+    .profil-bio {
+      font-size: .95rem;
+      color: var(--gray);
+      margin-bottom: 2.5rem;
+      line-height: 1.85;
+    }
+
+    .profil-bio strong { color: var(--white); font-weight: 600; }
+
+    .profil-highlight {
+      border-left: 2px solid var(--gold);
+      padding: 1rem 1.5rem;
+      background: rgba(201,168,76,.04);
+      margin: 2rem 0;
+      font-style: italic;
+      font-size: .9rem;
+      color: var(--gray);
+    }
+
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 2.5rem;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 1.5rem;
+      padding-bottom: 2rem;
+      position: relative;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 91px;
+      top: .5rem;
+      bottom: 0;
+      width: 1px;
+      background: var(--border);
+    }
+
+    .timeline-item:last-child::before { display: none; }
+
+    .timeline-year {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      color: var(--gold);
+      padding-top: .15rem;
+      text-align: right;
+    }
+
+    .timeline-body { position: relative; padding-left: 1.5rem; }
+
+    .timeline-body::before {
+      content: '';
+      position: absolute;
+      left: -5px;
+      top: .45rem;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      border: 1.5px solid var(--gold);
+      background: var(--navy-mid);
+    }
+
+    .timeline-role {
+      font-size: .88rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: .2rem;
+    }
+
+    .timeline-org {
+      font-size: .78rem;
+      color: var(--gold);
+      margin-bottom: .4rem;
+    }
+
+    .timeline-desc {
+      font-size: .8rem;
+      color: var(--gray);
+      line-height: 1.7;
+    }
+
+    /* ── Institutions ── */
+    #institutions {
+      background: var(--navy);
+      padding: 4rem 5%;
+    }
+
+    .institutions-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 3rem;
+      gap: 2rem;
+    }
+
+    .inst-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .inst-card {
+      background: var(--navy);
+      padding: 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      transition: background var(--transition);
+    }
+
+    .inst-card:hover { background: var(--navy-light); }
+
+    .inst-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: .06em;
+    }
+
+    .inst-name {
+      font-size: .88rem;
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1.4;
+    }
+
+    .inst-scope {
+      font-size: .8rem;
+      color: var(--gray);
+      line-height: 1.7;
+    }
+
+    .inst-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .4rem;
+      margin-top: auto;
+    }
+
+    .inst-tag {
+      font-size: .65rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(201,168,76,.25);
+      padding: .2rem .55rem;
+      border-radius: 2px;
+    }
+
+    /* ── Approche ── */
+    #approche { background: var(--navy-mid); }
+
+    .approche-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    .step-num {
+      width: 48px;
+      height: 48px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .step-title {
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: .4rem;
+    }
+
+    .step-text {
+      font-size: .82rem;
+      color: var(--gray);
+      line-height: 1.75;
+    }
+
+    .approche-right {
+      position: sticky;
+      top: 6rem;
+    }
+
+    .valeurs {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .valeur-item {
+      background: var(--navy-mid);
+      padding: 1.5rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      transition: background var(--transition);
+    }
+
+    .valeur-item:hover { background: var(--navy-light); }
+
+    .valeur-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: .1rem; }
+
+    .valeur-title {
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: .25rem;
+    }
+
+    .valeur-text {
+      font-size: .78rem;
+      color: var(--gray);
+      line-height: 1.7;
+    }
+
+    /* ── Contact ── */
+    #contact { background: var(--navy); }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .contact-item-icon {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .9rem;
+      flex-shrink: 0;
+    }
+
+    .contact-item-label {
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: .2rem;
+    }
+
+    .contact-item-value {
+      font-size: .88rem;
+      color: var(--white);
+    }
+
+    .contact-item-value a {
+      color: var(--white);
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+
+    .contact-item-value a:hover { color: var(--gold); }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: .45rem;
+    }
+
+    label {
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+
+    input, select, textarea {
+      background: var(--navy-mid);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: .85rem;
+      padding: .75rem 1rem;
+      outline: none;
+      transition: border-color var(--transition);
+      width: 100%;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--gold);
+    }
+
+    input::placeholder, textarea::placeholder { color: rgba(138,149,163,.5); }
+
+    select option { background: var(--navy-mid); }
+
+    textarea { resize: vertical; min-height: 130px; }
+
+    .form-submit {
+      align-self: flex-start;
+      background: var(--gold);
+      color: var(--navy);
+      font-family: 'Inter', sans-serif;
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: .9rem 2.25rem;
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition);
+    }
+
+    .form-submit:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--navy-mid);
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--white);
+    }
+
+    .footer-brand span { color: var(--gold); }
+
+    .footer-copy {
+      font-size: .75rem;
+      color: var(--gray);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-size: .72rem;
+      letter-spacing: .08em;
+      color: var(--gray);
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+
+    .footer-links a:hover { color: var(--gold); }
+
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 1024px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .stat-item:nth-child(2) { border-right: none; }
+      .stat-item:nth-child(3) { border-top: 1px solid var(--border); }
+      .stat-item:nth-child(4) { border-top: 1px solid var(--border); border-right: none; }
+
+      .services-grid { grid-template-columns: 1fr; }
+      .inst-cards { grid-template-columns: 1fr; }
+      .profil-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .profil-portrait { aspect-ratio: 4/3; max-width: 360px; }
+      .approche-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .approche-right { position: static; }
+      .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .hero-badges { display: none; }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 5%; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+
+      #hero { padding-top: 7rem; }
+      .hero-title { font-size: clamp(2rem, 7vw, 2.8rem); }
+
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+
+      .inst-cards { grid-template-columns: 1fr; }
+
+      .form-row { grid-template-columns: 1fr; }
+
+      footer { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<!-- Navigation -->
+<nav>
+  <a href="#hero" class="nav-logo">Roland <span>Shala</span></a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#profil">Profil</a></li>
+    <li><a href="#institutions">Institutions</a></li>
+    <li><a href="#approche">Approche</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#services" class="mobile-link">Services</a>
+  <a href="#profil" class="mobile-link">Profil</a>
+  <a href="#institutions" class="mobile-link">Institutions</a>
+  <a href="#approche" class="mobile-link">Approche</a>
+  <a href="#contact" class="mobile-link">Contact</a>
+</div>
+
+<!-- Hero -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+
+  <div class="hero-content">
+    <p class="hero-eyebrow">Auditeur Financier Indépendant</p>
+    <h1 class="hero-title">
+      Rigueur, intégrité &amp;<br />
+      <em>expertise internationale</em>
+    </h1>
+    <p class="hero-subtitle">
+      Audit du secteur public et des organisations internationales — Union Européenne, Nations Unies, OTAN. Une expertise de terrain au service de la transparence et de la bonne gouvernance.
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Prendre contact</a>
+      <a href="#services" class="btn-secondary">Voir les services</a>
+    </div>
+  </div>
+
+  <div class="hero-badges">
+    <div class="badge">
+      <div class="badge-icon">🇪🇺</div>
+      <div class="badge-text">Union Européenne</div>
+    </div>
+    <div class="badge">
+      <div class="badge-icon">🌐</div>
+      <div class="badge-text">Nations Unies</div>
+    </div>
+    <div class="badge">
+      <div class="badge-icon">🛡️</div>
+      <div class="badge-text">OTAN</div>
+    </div>
+    <div class="badge">
+      <div class="badge-icon">🏛️</div>
+      <div class="badge-text">Secteur public</div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats -->
+<div id="stats">
+  <div class="stats-grid">
+    <div class="stat-item reveal">
+      <div class="stat-number">15+</div>
+      <div class="stat-label">Années d'expérience</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-number">3</div>
+      <div class="stat-label">Institutions internationales</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-number">12+</div>
+      <div class="stat-label">Pays couverts</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-number">100%</div>
+      <div class="stat-label">Indépendance garantie</div>
+    </div>
+  </div>
+</div>
+
+<!-- Services -->
+<section id="services">
+  <div class="section-label">Services</div>
+  <h2 class="section-title reveal">Un spectre d'expertise<br />complet et ciblé</h2>
+  <p class="section-intro reveal">Des prestations d'audit financier conçues pour les exigences spécifiques du secteur public et des organisations internationales.</p>
+
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <span class="service-icon">📊</span>
+      <h3 class="service-title">Audit financier &amp; comptable</h3>
+      <p class="service-desc">Examen indépendant des états financiers, contrôle de la régularité et de la sincérité des comptes selon les normes IPSAS et IFAC.</p>
+      <ul class="service-list">
+        <li>Vérification des états financiers annuels</li>
+        <li>Conformité aux normes IPSAS</li>
+        <li>Contrôle des cycles budgétaires</li>
+        <li>Rapports d'opinion d'audit</li>
+      </ul>
+    </div>
+
+    <div class="service-card reveal">
+      <span class="service-icon">🏛️</span>
+      <h3 class="service-title">Audit du secteur public</h3>
+      <p class="service-desc">Audit externe et interne des entités publiques nationales et locales, des administrations et des établissements sous tutelle de l'État.</p>
+      <ul class="service-list">
+        <li>Audit des collectivités territoriales</li>
+        <li>Contrôle des marchés publics</li>
+        <li>Évaluation des programmes publics</li>
+        <li>Audit de performance (VFM)</li>
+      </ul>
+    </div>
+
+    <div class="service-card reveal">
+      <span class="service-icon">🌐</span>
+      <h3 class="service-title">Institutions internationales</h3>
+      <p class="service-desc">Expertise spécialisée pour les organisations intergouvernementales soumises à des cadres réglementaires et fiduciaires complexes.</p>
+      <ul class="service-list">
+        <li>Audit des fonds et programmes UE</li>
+        <li>Audit des agences onusiennes</li>
+        <li>Vérification des dépenses OTAN</li>
+        <li>Audit des fonds fiduciaires</li>
+      </ul>
+    </div>
+
+    <div class="service-card reveal">
+      <span class="service-icon">⚠️</span>
+      <h3 class="service-title">Gestion des risques &amp; contrôle interne</h3>
+      <p class="service-desc">Évaluation et renforcement des dispositifs de contrôle interne et des systèmes de gestion des risques financiers et opérationnels.</p>
+      <ul class="service-list">
+        <li>Cartographie des risques financiers</li>
+        <li>Évaluation du contrôle interne (COSO)</li>
+        <li>Plans de remédiation</li>
+        <li>Formation des équipes finance</li>
+      </ul>
+    </div>
+
+    <div class="service-card reveal">
+      <span class="service-icon">🔍</span>
+      <h3 class="service-title">Investigations &amp; conformité</h3>
+      <p class="service-desc">Enquêtes financières ciblées sur des situations d'irrégularités, fraudes présumées ou manquements aux obligations fiduciaires.</p>
+      <ul class="service-list">
+        <li>Investigations sur irrégularités</li>
+        <li>Audit forensique</li>
+        <li>Conformité réglementaire</li>
+        <li>Rapports d'expertise judiciaire</li>
+      </ul>
+    </div>
+
+    <div class="service-card reveal">
+      <span class="service-icon">📋</span>
+      <h3 class="service-title">Conseil &amp; gouvernance</h3>
+      <p class="service-desc">Accompagnement stratégique pour l'amélioration de la gouvernance financière, de la transparence et des pratiques de reporting.</p>
+      <ul class="service-list">
+        <li>Diagnostic gouvernance financière</li>
+        <li>Mise en place de comités d'audit</li>
+        <li>Politiques comptables &amp; manuels</li>
+        <li>Accompagnement IPSAS</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Profil -->
+<section id="profil">
+  <div class="profil-grid">
+    <div class="profil-left">
+      <div class="profil-portrait">
+        <div class="portrait-placeholder">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+          </svg>
+          <span>Photo professionnelle</span>
+        </div>
+      </div>
+
+      <div class="profil-certifs">
+        <div class="certif-tag"><span class="certif-dot"></span>Expert-Comptable certifié</div>
+        <div class="certif-tag"><span class="certif-dot"></span>CIA — Certified Internal Auditor</div>
+        <div class="certif-tag"><span class="certif-dot"></span>CGAP — Certified Gov. Auditing Prof.</div>
+        <div class="certif-tag"><span class="certif-dot"></span>Accrédité INTOSAI / ISSAI</div>
+      </div>
+    </div>
+
+    <div class="profil-right">
+      <div class="section-label">Profil</div>
+      <h2 class="section-title reveal">Roland Shala</h2>
+
+      <p class="profil-bio">
+        <strong>Auditeur financier indépendant</strong>, Roland Shala intervient depuis plus de quinze ans auprès des entités du secteur public et des grandes organisations internationales. Son parcours l'a conduit à mener des missions d'audit dans plus d'une dizaine de pays, au sein de structures aux exigences fiduciaires et réglementaires particulièrement élevées.
+      </p>
+
+      <div class="profil-highlight reveal">
+        « L'audit n'est pas un contrôle de façade — c'est le garant de la confiance que les citoyens et les partenaires placent dans les institutions qui les servent. »
+      </div>
+
+      <p class="profil-bio">
+        Formé aux normes <strong>IPSAS, ISSAI et ISA</strong>, il maîtrise les cadres comptables et d'audit propres aux institutions multilatérales. Son indépendance, sa rigueur méthodologique et sa capacité à travailler dans des environnements multiculturels et multilingues constituent les fondements de son positionnement.
+      </p>
+
+      <div class="timeline reveal">
+        <div class="timeline-item">
+          <div class="timeline-year">2018 →</div>
+          <div class="timeline-body">
+            <div class="timeline-role">Auditeur financier indépendant</div>
+            <div class="timeline-org">Missions UE · ONU · OTAN · secteur public</div>
+            <div class="timeline-desc">Audit externe et interne, investigations financières, conseil en gouvernance pour organisations internationales et entités publiques nationales.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2013–2018</div>
+          <div class="timeline-body">
+            <div class="timeline-role">Auditeur senior</div>
+            <div class="timeline-org">Cabinet d'audit international</div>
+            <div class="timeline-desc">Audit des entités publiques et para-publiques, missions multi-pays, encadrement d'équipes juniors.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2010–2013</div>
+          <div class="timeline-body">
+            <div class="timeline-role">Auditeur</div>
+            <div class="timeline-org">Administration publique nationale</div>
+            <div class="timeline-desc">Contrôle interne, audit des processus budgétaires et financiers au sein d'une administration centrale.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Institutions -->
+<section id="institutions">
+  <div class="institutions-header">
+    <div>
+      <div class="section-label">Cadre d'intervention</div>
+      <h2 class="section-title reveal">Institutions &amp; organisations</h2>
+    </div>
+    <p class="section-intro" style="margin-bottom:0">Missions d'audit réalisées au sein ou pour le compte des principales organisations intergouvernementales.</p>
+  </div>
+
+  <div class="inst-cards">
+    <div class="inst-card reveal">
+      <div class="inst-logo">U.E.</div>
+      <div class="inst-name">Union Européenne</div>
+      <p class="inst-scope">Audit des fonds structurels et d'investissement européens, vérification des dépenses des programmes Horizon et FEDER, conformité aux règlements financiers de l'UE.</p>
+      <div class="inst-tags">
+        <span class="inst-tag">Fonds structurels</span>
+        <span class="inst-tag">FEDER</span>
+        <span class="inst-tag">Horizon</span>
+        <span class="inst-tag">Règlement financier UE</span>
+      </div>
+    </div>
+
+    <div class="inst-card reveal">
+      <div class="inst-logo">O.N.U.</div>
+      <div class="inst-name">Nations Unies</div>
+      <p class="inst-scope">Audit interne et externe des agences spécialisées, des fonds et programmes onusiens. Conformité aux normes IPSAS et aux régulations financières du système des Nations Unies.</p>
+      <div class="inst-tags">
+        <span class="inst-tag">IPSAS</span>
+        <span class="inst-tag">Fonds fiduciaires</span>
+        <span class="inst-tag">Agences ONU</span>
+        <span class="inst-tag">OIOS</span>
+      </div>
+    </div>
+
+    <div class="inst-card reveal">
+      <div class="inst-logo">OTAN</div>
+      <div class="inst-name">Organisation du Traité de l'Atlantique Nord</div>
+      <p class="inst-scope">Audit des dépenses communes et des budgets civils et militaires de l'Alliance. Vérification de la conformité aux procédures financières OTAN (NAFAG).</p>
+      <div class="inst-tags">
+        <span class="inst-tag">Budget commun</span>
+        <span class="inst-tag">NAFAG</span>
+        <span class="inst-tag">Dépenses militaires</span>
+        <span class="inst-tag">Conformité</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Approche -->
+<section id="approche">
+  <div class="approche-grid">
+    <div>
+      <div class="section-label">Méthode de travail</div>
+      <h2 class="section-title reveal">Une démarche structurée,<br />rigoureuse et indépendante</h2>
+      <p class="section-intro reveal">Chaque mission suit un protocole éprouvé, adapté aux spécificités de l'entité auditée et conforme aux normes professionnelles internationales.</p>
+
+      <div class="steps">
+        <div class="step reveal">
+          <div class="step-num">01</div>
+          <div>
+            <div class="step-title">Cadrage &amp; planification</div>
+            <p class="step-text">Analyse du contexte institutionnel, identification des risques significatifs, définition du périmètre et établissement du plan d'audit. Communication initiale avec les parties prenantes.</p>
+          </div>
+        </div>
+
+        <div class="step reveal">
+          <div class="step-num">02</div>
+          <div>
+            <div class="step-title">Collecte &amp; analyse des preuves</div>
+            <p class="step-text">Tests substantifs et de conformité, entretiens avec les responsables financiers, examen des pièces justificatives et des systèmes d'information.</p>
+          </div>
+        </div>
+
+        <div class="step reveal">
+          <div class="step-num">03</div>
+          <div>
+            <div class="step-title">Évaluation &amp; conclusions</div>
+            <p class="step-text">Synthèse des constats, évaluation de l'importance relative des anomalies détectées, formulation des conclusions d'audit et discussion contradictoire.</p>
+          </div>
+        </div>
+
+        <div class="step reveal">
+          <div class="step-num">04</div>
+          <div>
+            <div class="step-title">Rapport &amp; suivi des recommandations</div>
+            <p class="step-text">Émission du rapport d'audit (opinion, constats, recommandations), présentation aux organes de gouvernance et suivi de la mise en œuvre des recommandations.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="approche-right">
+      <div class="section-label" style="margin-bottom:1.5rem">Valeurs professionnelles</div>
+      <div class="valeurs">
+        <div class="valeur-item reveal">
+          <div class="valeur-icon">⚖️</div>
+          <div>
+            <div class="valeur-title">Indépendance</div>
+            <p class="valeur-text">Aucun lien d'intérêt avec les entités auditées. L'indépendance d'esprit et d'apparence est non négociable.</p>
+          </div>
+        </div>
+        <div class="valeur-item reveal">
+          <div class="valeur-icon">🔒</div>
+          <div>
+            <div class="valeur-title">Confidentialité</div>
+            <p class="valeur-text">Stricte confidentialité de toutes les informations obtenues dans le cadre des missions. Engagement contractuel systématique.</p>
+          </div>
+        </div>
+        <div class="valeur-item reveal">
+          <div class="valeur-icon">📐</div>
+          <div>
+            <div class="valeur-title">Rigueur méthodologique</div>
+            <p class="valeur-text">Application des normes ISA, ISSAI et IPSAS. Documentation exhaustive de chaque dossier de travail.</p>
+          </div>
+        </div>
+        <div class="valeur-item reveal">
+          <div class="valeur-icon">🤝</div>
+          <div>
+            <div class="valeur-title">Dialogue constructif</div>
+            <p class="valeur-text">L'audit est un levier d'amélioration. Les recommandations sont pragmatiques, hiérarchisées et accompagnées.</p>
+          </div>
+        </div>
+        <div class="valeur-item reveal">
+          <div class="valeur-icon">🌍</div>
+          <div>
+            <div class="valeur-title">Dimension internationale</div>
+            <p class="valeur-text">Missions réalisées en français, anglais et dans des contextes multiculturels exigeants.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+  <div class="contact-grid">
+    <div>
+      <div class="section-label">Contact</div>
+      <h2 class="section-title reveal">Discutons de votre mission</h2>
+      <p class="section-intro reveal">Vous avez un besoin d'audit, une question sur mes services ou souhaitez explorer une collaboration ? Envoyez-moi un message.</p>
+
+      <div class="contact-info">
+        <div class="contact-item reveal">
+          <div class="contact-item-icon">✉️</div>
+          <div>
+            <div class="contact-item-label">Email</div>
+            <div class="contact-item-value"><a href="mailto:contact@rolandshala.com">contact@rolandshala.com</a></div>
+          </div>
+        </div>
+
+        <div class="contact-item reveal">
+          <div class="contact-item-icon">📞</div>
+          <div>
+            <div class="contact-item-label">Téléphone</div>
+            <div class="contact-item-value"><a href="tel:+33600000000">+33 6 00 00 00 00</a></div>
+          </div>
+        </div>
+
+        <div class="contact-item reveal">
+          <div class="contact-item-icon">📍</div>
+          <div>
+            <div class="contact-item-label">Localisation</div>
+            <div class="contact-item-value">France · Disponible en déplacement international</div>
+          </div>
+        </div>
+
+        <div class="contact-item reveal">
+          <div class="contact-item-icon">💼</div>
+          <div>
+            <div class="contact-item-label">LinkedIn</div>
+            <div class="contact-item-value"><a href="#">Roland Shala</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <form id="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="prenom">Prénom</label>
+            <input type="text" id="prenom" name="prenom" placeholder="Jean" required />
+          </div>
+          <div class="form-group">
+            <label for="nom">Nom</label>
+            <input type="text" id="nom" name="nom" placeholder="Dupont" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="organisation">Organisation</label>
+          <input type="text" id="organisation" name="organisation" placeholder="Nom de votre organisation" />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email professionnel</label>
+          <input type="email" id="email" name="email" placeholder="jean.dupont@organisation.eu" required />
+        </div>
+
+        <div class="form-group">
+          <label for="objet">Objet de la mission</label>
+          <select id="objet" name="objet">
+            <option value="">Sélectionner...</option>
+            <option>Audit financier &amp; comptable</option>
+            <option>Audit secteur public</option>
+            <option>Audit institution internationale</option>
+            <option>Gestion des risques / contrôle interne</option>
+            <option>Investigation / conformité</option>
+            <option>Conseil en gouvernance</option>
+            <option>Autre</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="Décrivez brièvement votre besoin, le périmètre envisagé et les délais éventuels..." required></textarea>
+        </div>
+
+        <button type="submit" class="form-submit">Envoyer le message →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-brand">Roland <span>Shala</span> — Auditeur Financier Indépendant</div>
+  <p class="footer-copy">© 2026 Roland Shala. Tous droits réservés.</p>
+  <ul class="footer-links">
+    <li><a href="#">Mentions légales</a></li>
+    <li><a href="#">Politique de confidentialité</a></li>
+  </ul>
+</footer>
+
+<script>
+  // Scroll progress bar
+  window.addEventListener('scroll', () => {
+    const scrollTop = document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    document.getElementById('progress-bar').style.width = (scrollTop / scrollHeight * 100) + '%';
+  });
+
+  // Reveal on scroll
+  const observer = new IntersectionObserver(
+    entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+    { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+  );
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Hamburger menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+
+  document.querySelectorAll('.mobile-link').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+
+  // Form submit
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.form-submit');
+    btn.textContent = 'Message envoyé ✓';
+    btn.style.background = '#2d6a4f';
+    btn.style.color = '#f8f7f4';
+    setTimeout(() => {
+      btn.textContent = 'Envoyer le message →';
+      btn.style.background = '';
+      btn.style.color = '';
+      e.target.reset();
+    }, 3500);
+  }
+</script>
+</body>
+</html>
